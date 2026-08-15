@@ -18,10 +18,10 @@ try:
     df_base = load_data(csv_url)
     
     if "Товар" in df_base.columns and "Базовая цена (руб)" in df_base.columns:
-        df_base = df_base.dropna(subset=["Товар", "Базовая цена (руб)"])
+        df_base = df_base.dropna(subset=["Медицина", "Базовая цена (руб)"])
         df_base["Базовая цена (руб)"] = df_base["Базовая цена (руб)"].astype(int)
         
-        percent = st.slider("Выбери наценку", min_value=0, max_value=30, value=0, step=1)
+        percent = st.slider("Выбери на сколько ты ограбишь сталкеров в % (Наценка)", min_value=0, max_value=30, value=0, step=1)
 
         df_base["Цена с наценкой (руб)"] = (df_base["Базовая цена (руб)"] * (1 + percent / 100)).round(0).astype(int)
         
@@ -29,13 +29,13 @@ try:
         df_base["Количество (шт)"] = 1
 
         st.subheader("Медицина")
-        st.caption("Поставьте галочку слева от товара и настройте его количество:")
+        st.caption("Ебани галочку слева от медицины и справа выставь колличество:")
 
         edited_df = st.data_editor(
             df_base,
             use_container_width=True,
             hide_index=True,
-            disabled=["Товар", "Базовая цена (руб)", "Цена с наценкой (руб)"], # Запрещаем менять названия и цены
+            disabled=["Товар", "Базовая цена (руб)", "Цена с наценкой (руб)"],
             column_config={
                 "Выбрать": st.column_config.CheckboxColumn("Выбрать", default=False),
                 "Количество (шт)": st.column_config.NumberColumn("Количество", min_value=1, max_value=1000, step=1, default=1),
@@ -52,10 +52,10 @@ try:
             selected_rows["Всего (руб)"] = selected_rows["Цена с наценкой (руб)"] * selected_rows["Количество (шт)"]
             total_sum = selected_rows["Всего (руб)"].sum()
 
-            st.success(f"### 🛒 Итого по денякам: {total_sum:,} руб.".replace(",", " "))
+            st.success(f"### Итого по денякам: {total_sum:,} руб.".replace(",", " "))
             
             # Показываем мини-чек (что именно выбрано)
-            st.write("**Выбранные позиции:**")
+            st.write("*Выбранные позиции:*")
             st.dataframe(
                 selected_rows[["Товар", "Количество (шт)", "Цена с наценкой (руб)", "Всего (руб)"]],
                 use_container_width=True,
