@@ -16,7 +16,7 @@ try:
     if "Товар" in df.columns and "Базовая цена (руб)" in df.columns:
         df = df.dropna(subset=["Товар", "Базовая цена (руб)"])
         df["Базовая цена (руб)"] = df["Базовая цена (руб)"].astype(int)
-        percent = st.slider("Выберите наценку (%)", min_value=0, max_value=30, value=0, step=1)
+        percent = st.slider("Я хочу ограбить сталкера на (%)", min_value=0, max_value=30, value=0, step=1)
         df["Цена с наценкой (руб)"] = (df["Базовая цена (руб)"] * (1 + percent / 100)).round(0).astype(int)
         st.subheader(f"Результаты с наценкой:")
         st.dataframe(
