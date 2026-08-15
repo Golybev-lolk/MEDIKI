@@ -35,7 +35,7 @@ try:
             df_base,
             use_container_width=True,
             hide_index=True,
-            disabled=["Товар", "Базовая цена (руб)", "Цена с наценкой (руб)"],
+            disabled=["Медицина", "Базовая цена (руб)", "Цена с наценкой (руб)"],
             column_config={
                 "Выбрать": st.column_config.CheckboxColumn("Выбрать", default=False),
                 "Количество (шт)": st.column_config.NumberColumn("Количество", min_value=1, max_value=1000, step=1, default=1),
@@ -54,10 +54,9 @@ try:
 
             st.success(f"### Итого по денякам: {total_sum:,} руб.".replace(",", " "))
             
-            # Показываем мини-чек (что именно выбрано)
             st.write("*Выбранные позиции:*")
             st.dataframe(
-                selected_rows[["Товар", "Количество (шт)", "Цена с наценкой (руб)", "Всего (руб)"]],
+                selected_rows[["Медицина", "Количество (шт)", "Цена с наценкой (руб)", "Всего (руб)"]],
                 use_container_width=True,
                 hide_index=True,
                 column_config={
