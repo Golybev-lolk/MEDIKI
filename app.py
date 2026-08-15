@@ -6,8 +6,8 @@ if "edit?usp=sharing" in GOOGLE_SHEET_URL:
 else:
     csv_url = GOOGLE_SHEET_URL.split("/edit")[0] + "/gviz/tq?tqx=out:csv"
 st.set_page_config(page_title="Расчет наценки", layout="centered")
-st.title("Калькулятор цен")
-st.write("Передвигайте ползунок")
+st.title("Медики TF2")
+st.write("Двигай штуку на нужный %")
 try:
     @st.cache_data(ttl=5)
     def load_data(url):
@@ -18,7 +18,7 @@ try:
         df["Базовая цена (руб)"] = df["Базовая цена (руб)"].astype(int)
         percent = st.slider("Выберите наценку (%)", min_value=0, max_value=30, value=0, step=1)
         df["Цена с наценкой (руб)"] = (df["Базовая цена (руб)"] * (1 + percent / 100)).round(0).astype(int)
-        st.subheader(f"Результаты с наценкой {percent}%:")
+        st.subheader(f"Результаты с наценкой:")
         st.dataframe(
             df, 
             use_container_width=True, 
