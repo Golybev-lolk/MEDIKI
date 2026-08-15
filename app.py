@@ -17,7 +17,7 @@ try:
 
     df_base = load_data(csv_url)
     
-    if "Товар" in df_base.columns and "Базовая цена (руб)" in df_base.columns:
+    if "Медицина" in df_base.columns and "Базовая цена (руб)" in df_base.columns:
         df_base = df_base.dropna(subset=["Медицина", "Базовая цена (руб)"])
         df_base["Базовая цена (руб)"] = df_base["Базовая цена (руб)"].astype(int)
         
